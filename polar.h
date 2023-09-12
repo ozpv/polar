@@ -27,6 +27,14 @@ volatile double icos(double x) {
 	}
 }
 
+volatile double isec(double x) {
+	return 1 / icos(x);
+}
+
+volatile double icsc(double x) {
+	return 1 / isin(x);
+}
+
 volatile double itan(double x) {
 	return isin(x) / icos(x);
 }
@@ -37,5 +45,7 @@ volatile double icot(double x) {
 
 #define sin isin
 #define cos icos
+#define sec isec
+#define csc icsc
 #define tan itan
 #define cot icot

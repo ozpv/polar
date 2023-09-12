@@ -12,9 +12,9 @@ inline void getR(double a, double b, double c, double *r, double theta, volatile
 	/* r = a * func(b * theta) + c */
 	/* func is a function pointer to a trigonometric function. */
 	/* transformations: */
-	/* a: [1, DBL_MAX] */
-	/* b: [1, DBL_MAX] */
-	/* c: [0, DBL_MAX] */
+	/* a: [1, DBL_MAX] [-1, DBL_MIN] */
+	/* b: [1, DBL_MAX] [-1, DBL_MIN] */
+	/* c: [0, DBL_MAX] [0, DBL_MIN] */
 
 	*r = a * (*func)(b * (theta)) + c;
 }
@@ -22,7 +22,6 @@ inline void getR(double a, double b, double c, double *r, double theta, volatile
 int main(void) {
 	METRICS metrics;
 	metrics.screenDC = GetDC(NULL);
-
 	metrics.screenWidth = GetSystemMetrics(SM_CXSCREEN);
 	metrics.screenHeight = GetSystemMetrics(SM_CYSCREEN);
 
@@ -36,12 +35,12 @@ int main(void) {
 		for (double i = 0.0; i < 360.0; i++) {
 			/* nested for loop. could convert to a while loop also for read-ability. */
 			for (double j = 0.0; j < 200.0; j++) {
-				getR(j, 6.0, k, &r, radians(i), sin);
+				getR(j * j * j, -6.0, k, &r, radians(i), sec);
 				toXY(r, radians(i), &x, &y);
-				DrawIcon(metrics.screenDC, (metrics.screenWidth / 2) + x - 16, (metrics.screenHeight / 2) + y - 16, LoadIcon(NULL, IDI_WARNING));
+				SetPixel(metrics.screenDC, (metrics.screenWidth / 2) + x, (metrics.screenHeight / 2) + y, RGB(255, 255, 255));
 			}
 		}
-		k += 50;
+		k++;
 	}
 	return 0;
 }
