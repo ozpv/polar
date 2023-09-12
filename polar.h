@@ -10,7 +10,14 @@ typedef struct {
 
 /* avoid math.h header */
 #define M_PI 3.14159265358979323846
-#define radians(degrees) degrees * M_PI / 180
+
+inline double radians(double degrees) {
+	return degrees * M_PI / 180;
+}
+
+inline COLORREF RGBToHEX(BYTE Red, BYTE Green, BYTE Blue) {
+	return ((COLORREF)((Red | ((WORD)(Green) << 8)) | (((DWORD)Blue) << 16)));
+}
 
 /* compiler "optimizations" add around 50kb. I don't like that. */
 volatile double isin(double x) {
