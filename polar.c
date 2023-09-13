@@ -25,8 +25,7 @@ inline void getR(double a, double b, double c, double *r, double theta, volatile
 
 	if (*func == NULL) {
 		*r = a * theta + c;
-	}
-	else {
+	} else {
 		*r = a * (*func)(b * theta) + c;
 	}
 }
